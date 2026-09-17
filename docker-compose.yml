@@ -14,8 +14,14 @@ services:
       - db_data:/var/lib/mysql
     networks:
       - internal_network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   backend:
+    image: ${DOCKERHUB_USERNAME}/node-backend:latest
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -31,8 +37,14 @@ services:
       - db
     networks:
       - internal_network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   nginx:
+    image: ${DOCKERHUB_USERNAME}/nginx-proxy:latest
     build:
       context: ./nginx
       dockerfile: Dockerfile
@@ -44,6 +56,11 @@ services:
       - backend
     networks:
       - internal_network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 networks:
   internal_network:
