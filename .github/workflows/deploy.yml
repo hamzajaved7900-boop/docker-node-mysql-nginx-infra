@@ -1,0 +1,27 @@
+name: Build and Validate Stack
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  validate-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Environment File
+        run: |
+          cp .env.example .env
+
+      - name: Validate Docker Compose Syntax
+        run: |
+          docker compose config
+
+      - name: Build Docker Images
+        run: |
+          docker compose build
