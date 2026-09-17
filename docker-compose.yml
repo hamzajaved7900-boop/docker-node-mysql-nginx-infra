@@ -21,7 +21,7 @@ services:
         max-file: "3"
 
   backend:
-    image: ${DOCKERHUB_USERNAME}/node-backend:latest
+    image: ${DOCKERHUB_USERNAME:-local}/node-backend:latest
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -44,7 +44,7 @@ services:
         max-file: "3"
 
   nginx:
-    image: ${DOCKERHUB_USERNAME}/nginx-proxy:latest
+    image: ${DOCKERHUB_USERNAME:-local}/nginx-proxy:latest
     build:
       context: ./nginx
       dockerfile: Dockerfile
