@@ -5,8 +5,8 @@ pipeline {
         AWS_REGION     = 'us-east-1'
         AWS_ACCOUNT_ID = '887951336993'
         ECR_REPO_NAME  = 'node-app-repo'
-        ECS_CLUSTER    = 'node-ecs-cluster'
-        ECS_SERVICE    = 'node-ecs-service'
+        ECS_CLUSTER    = 'production-microservices-cluster'
+        ECS_SERVICE    = 'web-microservice'
         IMAGE_TAG      = "${BUILD_NUMBER}"
     }
 
