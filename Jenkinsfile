@@ -21,7 +21,6 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo "Building Docker image for Backend..."
-                // Agar Dockerfile backend directory mein hai:
                 sh "docker build -t ${ECR_REPO_NAME}:${IMAGE_TAG} ./backend"
             }
         }
