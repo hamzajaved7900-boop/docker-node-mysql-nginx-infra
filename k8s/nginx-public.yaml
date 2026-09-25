@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
+  namespace: default
   labels:
     app: nginx
 spec:
@@ -15,30 +16,28 @@ spec:
         app: nginx
     spec:
       containers:
-      - name: nginx
-        image: nginx:alpine
-        ports:
-        - containerPort: 80
-        resources:
-          requests:
-            cpu: "256m"
-            memory: "256Mi"
-          limits:
-            cpu: "256m"
-            memory: "256Mi"
+        - name: nginx
+          image: 887951336993.dkr.ecr.us-east-1.amazonaws.com/nginx-proxy:latest
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: nginx-service
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: "external"
-    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
-    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+  namespace: default
 spec:
   type: LoadBalancer
   selector:
     app: nginx
   ports:
-    - port: 80
+    - protocol: TCP
+      port: 80
       targetPort: 80
