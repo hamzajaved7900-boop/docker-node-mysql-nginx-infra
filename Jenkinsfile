@@ -53,6 +53,8 @@ pipeline {
                 sh """
                 aws ecs update-service --cluster ${ECS_CLUSTER} --service ${ECS_SERVICE} --force-new-deployment --region ${AWS_REGION}
                 """
+            }
+        }
                 stage('Deploy to EKS') {
     steps {
         sh '''
@@ -61,8 +63,6 @@ pipeline {
             kubectl apply -f k8s/backend.yaml
             kubectl apply -f k8s/nginx-public.yaml
         '''
-    }
-}
             }
         }
     }
@@ -79,4 +79,5 @@ pipeline {
             echo 'Pipeline failed. Check logs above.'
         }
     }
+}
 }
