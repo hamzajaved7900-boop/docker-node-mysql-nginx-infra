@@ -53,6 +53,16 @@ pipeline {
                 sh """
                 aws ecs update-service --cluster ${ECS_CLUSTER} --service ${ECS_SERVICE} --force-new-deployment --region ${AWS_REGION}
                 """
+                stage('Deploy to EKS') {
+    steps {
+        sh '''
+            aws eks update-kubeconfig --region us-east-1 --name devops-demo-cluster
+            kubectl apply -f k8s/mysql.yaml
+            kubectl apply -f k8s/backend.yaml
+            kubectl apply -f k8s/nginx-public.yaml
+        '''
+    }
+}
             }
         }
     }
