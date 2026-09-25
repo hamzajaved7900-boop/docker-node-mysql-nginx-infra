@@ -21,6 +21,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo "Building Docker image for Backend..."
+                // Build the Docker image for the backend service
                 sh "docker build -t ${ECR_REPO_NAME}:${IMAGE_TAG} ./backend"
             }
         }
